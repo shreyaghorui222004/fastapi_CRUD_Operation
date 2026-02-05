@@ -1,5 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware   
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 from database import SessionLocal, engine
@@ -20,13 +22,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve static files (CSS, JS, images, etc.)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Create tables meta data basically create table
 database_models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
-def greet():
-    return {"message": "Welcome to my page"}
+def serve_index():
+    return FileResponse("static/index.html")
 
 
 def get_db():
