@@ -1,2 +1,2 @@
-# FastAPI-CRUD-Project
-FastAPI and Postgresql
+# FastAPI-CRUD-operation
+FastAPI and sqllite
